@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# ==============================================================================
+# FASE 1: verifichiamo se il kernel installato è il più recente o c'è n'è uno che abbiamo scaricato e non installato ancora più recente di quello attuale , magari non ho fatto shutdown o reboot del sistema
+# ==============================================================================
+
+# Estraiamo tra tutte quelle presenti la versione dell'ultimo kernel installato fisicamente sul disco.
+
+LATEST_INSTALLED=$(rpm -q kernel --queryformat '%{VERSION}-%{RELEASE}.%{ARCH}\n' | sort -V | tail -n 1)
+
+# Versione del kernel attualmente in esecuzione.
+CURRENT_RUNNING=$(uname -r)
+
+
+# ==============================================================================
+# FASE 2: verifichiamo che quello attuale che si suppona sia il più aggiornato sia effettivamente l'ultima versione oppure online ci sia una versione piu recente rispetto a quella attuale , in caso è vero il risultato ti tornerà FALSE , altrimenti ti tornerà true
+# ==============================================================================
+
+# 1. [ ... = ... ] -> Confronta se il kernel in esecuzione è uguale a quello su disco.
+# 2. && dnf ...    -> Se sono uguali, interroga i server web per cercare nuovi aggiornamenti.
+# 3. && echo TRUE  -> Se entrambi i controlli hanno successo (nessun update pendente), stampa TRUE.
+# 4. || echo FALSE -> Se anche uno solo dei controlli fallisce (serve riavvio o aggiornamento), stampa FALSE.
+
+[ "$CURRENT_RUNNING" = "$LATEST_INSTALLED" ] && dnf check-update -q kernel  && echo "TRUE" || echo "FALSE"
