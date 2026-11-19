@@ -1,0 +1,15 @@
+## Supponiamo che abbiamo un file csv con i vostri dati
+## nome,cognome,numero
+## bisogna estrarre la colonna cognome. La prima lettera deve diventare sempre maiuscola, selezionare solo due cognomi (o uno o l'altro).
+## deve essere tutto in pipe.
+
+
+Alberto,roncaccio,392812974012
+Giordano,bruno,328304021921
+Mattia,Sintoni,342389201929
+Vincenzo,Abete,381023038101
+Noemi,Tulusi,381012031284
+Pippo,Tuscano,32138213021
+Kevin,Darisi,34912930213
+Domenico,Cotugno,334980121012
+Fabio,Petrusi,3223013103821
